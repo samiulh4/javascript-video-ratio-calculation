@@ -75,6 +75,10 @@
       }
       return a;
     }*/
+   // Efficient Euclidean Algorithm
+function getGCD(a, b) {
+    return b === 0 ? a : getGCD(b, a % b);
+}
 
       function greatestCommonDivisor(num1, num2) {
         let hcf = 1;
