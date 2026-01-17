@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Video Aspect Ratio Detector</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      max-width: 700px;
+      margin: auto;
+    }
+
+    video {
+      width: 100%;
+      margin-top: 15px;
+      border-radius: 8px;
+      background: #000;
+    }
+
+    .result {
+      margin-top: 15px;
+      background: #f4f4f4;
+      padding: 15px;
+      border-radius: 8px;
+    }
+
+    h3 {
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h3>Upload Video to Detect Aspect Ratio</h3>
+  <input type="file" accept="video/*" id="videoInput">
+
+  <!-- Video Preview -->
+  <video id="videoPreview" controls style="display:none;width: 250px;height: 250px;"></video>
+
+  <!-- Result -->
+  <div class="result" id="result"></div>
+
+  <script>
+    const input = document.getElementById('videoInput');
+    const result = document.getElementById('result');
+    const videoPreview = document.getElementById('videoPreview');
+
+    /* ===============================
+       RATIO LABEL MAP
+    =============================== */
+    function getRatioLabel(ratio) {
+      const ratios = {
+        "16:9": "Widescreen",
+        "9:16": "Social Story",
+        "1:1": "Square",
+        "4:5": "Social Post",
+        "3:4": "Portrait",
+        "4:3": "Classic",
+        "3:2": "Standard Photo",
+        "2:1": "Cinematic",
+        "1:2": "Vertical"
+      };
+      return ratios[ratio] || "Custom";
+    }
+
+    /* ===============================
+       GCD (EUCLIDEAN ALGORITHM)
+    =============================== */
+    /*function gcd(a, b) {
+      while (b !== 0) {
+        [a, b] = [b, a % b];
+      }
+      return a;
+    }*/
+
+      function greatestCommonDivisor(num1, num2) {
+        let hcf = 1;
+        let sm = Math.min(num1, num2);
+        for (let i = 1; i <= sm; i++) {
+          if (num1 % i === 0 && num2 % i === 0) {
+            hcf = i;
+          }
+        }
+        return hcf;
+      }
+
+    /* ===============================
+       PLATFORM STYLE RATIO MATCH
+    =============================== */
+    function detectStandardRatio(width, height) {
+      const ratio = width / height;
+      const tolerance = 0.02; // Industry tolerance
+
+      const standards = {
+        "16:9": 16 / 9,
+        "9:16": 9 / 16,
+        "1:1": 1,
+        "4:3": 4 / 3,
+        "3:4": 3 / 4,
+        "3:2": 3 / 2,
+        "2:3": 2 / 3,
+        "4:5": 4 / 5,
+        "1:2": 1 / 2,
+        "2:1": 2
+      };
+
+      for (const key in standards) {
+        if (Math.abs(ratio - standards[key]) < tolerance) {
+          return key;
+        }
+      }
+      return ratio.toFixed(4); // decimal fallback
+    }
+
+    /* ===============================
+       FILE INPUT HANDLER
+    =============================== */
+    input.addEventListener('change', function () {
+      const file = this.files[0];
+      if (!file) return;
+
+      const videoURL = URL.createObjectURL(file);
+
+      /* ---- Preview ---- */
+      videoPreview.src = videoURL;
+      videoPreview.style.display = 'block';
+
+      /* ---- Metadata reader ---- */
+      const video = document.createElement('video');
+      video.preload = 'metadata';
+
+      video.onloadedmetadata = function () {
+        const width = video.videoWidth; // encoded width
+        const height = video.videoHeight; // encoded height
+
+        /* Exact Ratio (Math) */
+        const divisor = greatestCommonDivisor(width, height);
+        const exactRatio = `${width / divisor}:${height / divisor}`;
+        const exactRatioLabel = getRatioLabel(exactRatio);
+
+        /* Platform Ratio */
+        const standardRatio = detectStandardRatio(width, height);
+        const standardRatioLabel = getRatioLabel(standardRatio);
+
+        /* Display */
+        result.innerHTML = `
+          <p><b>Resolution:</b> ${width} × ${height}</p>
+          <p><b>Exact Ratio (GCD):</b> ${exactRatio} (${exactRatioLabel})</p>
+          <p><b>Platform Ratio:</b> ${standardRatio} (${standardRatioLabel})</p>
+        `;
+
+        URL.revokeObjectURL(video.src);
+      };
+
+      video.src = videoURL;
+    });
+  </script>
+
+</body>
+</html>
