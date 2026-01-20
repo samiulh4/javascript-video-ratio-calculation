@@ -98,3 +98,5 @@ user.name = 'Ossp'; (Correact)
 # URL.revokeObjectURL();
 
 `Frees the memory or resources associated with a dynamically created object URL`
+
+`JavaScript can access file metadata and decoded video properties via the File and Video APIs, and raw binary data via FileReader or Streams. However, detailed codec-level information requires server-side tools like FFmpeg`

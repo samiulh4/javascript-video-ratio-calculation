@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Video Aspect Ratio Detector</title>
+</head>
+
+<body>
+
+   
+  <h3>Upload Video to Detect Aspect Ratio</h3>
+  <input type="file" accept="video/*" id="videoInput">
+
+  
+
+  <script type="text/javascript">
+    const videoInput = document.getElementById('videoInput');
+    videoInput.addEventListener('change', function(){
+      const file = this.files[0];
+      if(!file) return;
+      const fileReader = new FileReader();
+       // Fires when reading is complete
+      fileReader.onload = function(e){
+        const arrayBuffer = e.target.result;
+        //console.log('Raw Binary Data (ArrayBuffer):', arrayBuffer);
+        //const uint8Array = new Uint8Array(arrayBuffer);
+        //console.log(uint8Array);
+        const view = new DataView(arrayBuffer);
+        console.log('DataView:', view);
+        // Here you can parse the DataView to extract metadata like width and height
+      };
+       // Start reading file as raw binary
+      fileReader.readAsArrayBuffer(file);
+    });
+
+    
+  </script>
+
+</body>
+</html>
