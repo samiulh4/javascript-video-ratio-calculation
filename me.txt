@@ -1,0 +1,4 @@
+
+const file = this.files[0]
+File → Blob → Object
+It only represents the binary data + metadata
