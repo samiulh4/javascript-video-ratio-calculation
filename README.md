@@ -1,3 +1,4 @@
+
 # Files Property
 
 
@@ -89,3 +90,11 @@ add = 10;
 const user = { name: 'Samiul', age: 25 };
 user = { name: 'Ossp' }; (Incorreact)
 user.name = 'Ossp'; (Correact)
+
+
+# video.onloadedmetadata = function () {
+  event listener
+
+# URL.revokeObjectURL();
+
+`Frees the memory or resources associated with a dynamically created object URL`
