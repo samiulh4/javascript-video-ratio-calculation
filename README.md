@@ -1,3 +1,22 @@
+# Files Property
+
+
+When we use (<input type="file" id="videoInput">) and the user selects a file, the browser automatically adds a files property to the input element.
+
+files is a FileList and this.files[0] → the first selected file
+
+Why we write this.files[0], because (<input type="file" multiple>) have attribute (multiple)
+
+# What is URL.createObjectURL(file)?
+
+`It creates a temporary URL for a local file so the browser can use or preview it without uploading.`
+
+It take Parameter (object) as File
+
+Return DOMString
+
+blob:https://example.com/8d9f3c2a-... (This is called a Blob URL.)
+
 # Event
 
 `A JavaScript event is an action (signal) that is happens in the browser (system) and can be detected and handled by JavaScript.`
@@ -39,3 +58,34 @@ element.addEventListener('click', function () {
 });
 Need to read later
 `https://www.geeksforgeeks.org/javascript/what-is-event-propagation-capturing-bubbling/`
+
+# Popular Event
+- click
+- submit
+- input (Live input detect (typing))
+- change
+- DOMContentLoaded
+- scroll
+- keydown
+- focus / blur (Input validation)
+- load
+- resize
+
+# Let 
+- Change value
+- work on Block Scope
+- Redeclare same scope
+- Resiign later
+
+let add = function(a, b) {
+  return a + b;
+};
+add = 10;
+
+# const
+- Need to initilize first
+- Never change value
+- Objeact/Array not reassign but value change
+const user = { name: 'Samiul', age: 25 };
+user = { name: 'Ossp' }; (Incorreact)
+user.name = 'Ossp'; (Correact)
