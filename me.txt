@@ -2,3 +2,19 @@
 const file = this.files[0]
 File → Blob → Object
 It only represents the binary data + metadata
+
+-- npm install @ffmpeg/ffmpeg
+-- npm install mp4box
+-- mediainfo.js (https://mediainfo.js.org/docs/intro/)
+
+
+# ArrayBuffer (Raw Binary Data)
+it is possible to extract the height and width from an ArrayBuffer, but it's important to know that raw binary data doesn't have a "width" property like a standard object. To get those dimensions, you have to parse the specific file format header (MP4, AVI, MOV, etc.).
+
+Since most web videos are MP4 (ISO BMFF), you can look for the tkhd (track header) or avcC atoms. However, parsing these manually is complex because the data is nested in "boxes."
+
+Using the Video Decoder API (Modern Browsers)
+
+-- 
+MediaInfo.js is a JavaScript (WebAssembly) version of the MediaInfo tool that can read media metadata directly from raw binary data.
+--

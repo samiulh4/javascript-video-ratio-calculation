@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Video Aspect Ratio Detector</title>
+  <script src="https://cdn.jsdelivr.net/npm/mp4box@2.3.0/dist/mp4box.all.min.js"></script>
 </head>
 
 <body>
@@ -25,15 +26,13 @@
         //console.log('Raw Binary Data (ArrayBuffer):', arrayBuffer);
         //const uint8Array = new Uint8Array(arrayBuffer);
         //console.log(uint8Array);
-        const view = new DataView(arrayBuffer);
-        console.log('DataView:', view);
+        //const view = new DataView(arrayBuffer);
+        //console.log('DataView:', view);
         // Here you can parse the DataView to extract metadata like width and height
       };
        // Start reading file as raw binary
       fileReader.readAsArrayBuffer(file);
     });
-
-    
   </script>
 
 </body>
